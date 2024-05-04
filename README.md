@@ -73,6 +73,25 @@ class User extends Resource
 
 The first tab in every `Tabs` instance will be auto-selected. 
 
+**Note**: If use non-ascii char as title(ex: chinese), you should define the tab name with ascii char to avoid get empty slug string.
+```php
+public function fields(Request $request)
+{
+    return [
+      Tabs::make('Some Title', [
+        Tab::make('頁籤一', [
+            Number::make('Balance', 'balance'),
+            Number::make('Total', 'total'),
+        ])->name('tab-1'),
+        
+        Tab::make('頁籤二', [
+            Number::make('Paid To Date', 'paid_to_date')
+        ])->name('tab-2'),
+      ]),
+    ];
+}
+```
+
 ### Relationship Tabs
 
 ![image](https://user-images.githubusercontent.com/3426944/50060715-a3b8d680-0197-11e9-8f98-1cac8cf3fd83.png)
@@ -191,6 +210,7 @@ As of v1.4.0 it's possible to use a `Tab` class instead of an array to represent
 | name        | `string`            | `null`      | The name of the tab, used for the slug.  Defaults to the title if not set                                                                                              |
 | showIf      | `bool` or `Closure` | `null`      | If the result is truthy the tab will be shown.  `showIf` takes priority over `showUnless` and if neither are set, `true` is assumed.                                   |
 | showUnless  | `bool` or `Closure` | `null`      | If the result is falsy the tab will be shown.  `showIf` takes priority over `showUnless` and if neither are set, `true` is assumed.                                    |
+| preload  | `bool` or `Closure` | `null`      | If the result is truthy the tab will be rendered on the initial page load. This may affect initial page load performance, as any requests required by the tab's fields will also be executed.                                     |
 | bodyClass   | `string` or `array` | Empty array | A string or string array of classes to add to the tab's body.  This sets the `bodyClass` property, if you want to append you can use `addBodyClass` instead.           |
 
 ## Customization
