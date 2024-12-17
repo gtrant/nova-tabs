@@ -92,7 +92,7 @@ trait HasTabs
      * @param  string  $label
      * @return \Illuminate\Support\Collection<int, \Laravel\Nova\Panel>
      */
-    protected function panelsWithDefaultLabel(Collection $panels, FieldCollection $fields, $label)
+    protected function panelsWithDefaultLabel(Collection $panels, FieldCollection $fields, string $label) : Collection
     {
         return $panels->values()
             ->when($panels->where('name', $label)->isEmpty(), function ($panels) use ($label, $fields) {
